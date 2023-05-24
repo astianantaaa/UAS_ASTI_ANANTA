@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Peminjam;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class KeranjangController extends Controller
+class CekRoleController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -15,6 +14,10 @@ class KeranjangController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('peminjam/keranjang/index');
+        if (auth()->user()->hasRole(['admin', 'petugas'])) {
+            return redirect('/dashboard');
+        } else {
+            return redirect('/');
+        }
     }
 }
